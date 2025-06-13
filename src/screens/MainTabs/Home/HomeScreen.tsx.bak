@@ -89,213 +89,6 @@ export default function HomeScreen() {
       avatar: 'https://randomuser.me/api/portraits/lego/7.jpg',
       isMuted: false
     },
-    {
-      id: '8',
-      name: '赵六',
-      lastMessage: '周末去看电影吗？',
-      time: '10:20',
-      unread: 1,
-      avatar: 'https://randomuser.me/api/portraits/men/3.jpg',
-      isMuted: false
-    },
-    {
-      id: '9',
-      name: '项目A组',
-      lastMessage: '王总: 这个需求需要调整',
-      time: '昨天',
-      unread: 5,
-      avatar: 'https://randomuser.me/api/portraits/lego/9.jpg',
-      isMuted: false
-    },
-    {
-      id: '10',
-      name: '姐姐',
-      lastMessage: '爸妈下周要来',
-      time: '昨天',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
-      isMuted: false
-    },
-    {
-      id: '11',
-      name: '高中同学群',
-      lastMessage: '班长: 聚会照片已上传',
-      time: '星期二',
-      unread: 23,
-      avatar: 'https://randomuser.me/api/portraits/lego/11.jpg',
-      isMuted: false
-    },
-    {
-      id: '12',
-      name: '陈老师',
-      lastMessage: '作业记得按时提交',
-      time: '星期二',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/women/3.jpg',
-      isMuted: true
-    },
-    {
-      id: '13',
-      name: '快递小哥',
-      lastMessage: '包裹已放快递柜',
-      time: '09:15',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/men/4.jpg',
-      isMuted: false
-    },
-    {
-      id: '14',
-      name: '游戏战队',
-      lastMessage: '今晚8点开黑',
-      time: '2023/12/18',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/lego/14.jpg',
-      isMuted: false
-    },
-    {
-      id: '15',
-      name: '房东',
-      lastMessage: '房租已收到',
-      time: '2023/12/15',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/women/4.jpg',
-      isMuted: false
-    },
-    {
-      id: '16',
-      name: '周七',
-      lastMessage: '帮我带杯咖啡',
-      time: '08:30',
-      unread: 2,
-      avatar: 'https://randomuser.me/api/portraits/men/5.jpg',
-      isMuted: false
-    },
-    {
-      id: '17',
-      name: '读书会',
-      lastMessage: '本月推荐《三体》',
-      time: '星期一',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/lego/17.jpg',
-      isMuted: true
-    },
-    {
-      id: '18',
-      name: '吴八',
-      lastMessage: '资料发你邮箱了',
-      time: '星期日',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/men/6.jpg',
-      isMuted: false
-    },
-    {
-      id: '19',
-      name: '公司HR',
-      lastMessage: '请确认年假时间',
-      time: '星期五',
-      unread: 1,
-      avatar: 'https://randomuser.me/api/portraits/women/5.jpg',
-      isMuted: false
-    },
-    {
-      id: '20',
-      name: '摄影俱乐部',
-      lastMessage: '周末外拍活动',
-      time: '2023/12/10',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/lego/20.jpg',
-      isMuted: false
-    },
-    {
-      id: '21',
-      name: '郑九',
-      lastMessage: '合同已签署',
-      time: '13:45',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/men/7.jpg',
-      isMuted: false
-    },
-    {
-      id: '22',
-      name: '家人群',
-      lastMessage: '爸爸: 春节回家时间',
-      time: '星期四',
-      unread: 4,
-      avatar: 'https://randomuser.me/api/portraits/lego/22.jpg',
-      isMuted: false
-    },
-    {
-      id: '23',
-      name: '健身房',
-      lastMessage: '您的会员即将到期',
-      time: '星期三',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/lego/23.jpg',
-      isMuted: true
-    },
-    {
-      id: '24',
-      name: '孙十',
-      lastMessage: '会议纪要已整理',
-      time: '星期二',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/women/6.jpg',
-      isMuted: false
-    },
-    {
-      id: '25',
-      name: '大学室友群',
-      lastMessage: '老四: 我下月结婚',
-      time: '星期一',
-      unread: 15,
-      avatar: 'https://randomuser.me/api/portraits/lego/25.jpg',
-      isMuted: false
-    },
-    {
-      id: '26',
-      name: '外卖商家',
-      lastMessage: '记得给五星好评哦',
-      time: '2023/12/05',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/lego/26.jpg',
-      isMuted: false
-    },
-    {
-      id: '27',
-      name: '钱十一',
-      lastMessage: '代码已review',
-      time: '14:20',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/men/8.jpg',
-      isMuted: false
-    },
-    {
-      id: '28',
-      name: '宠物交流群',
-      lastMessage: '推荐这款猫粮不错',
-      time: '星期日',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/lego/28.jpg',
-      isMuted: true
-    },
-    {
-      id: '29',
-      name: '李十二',
-      lastMessage: '项目进度如何了？',
-      time: '星期五',
-      unread: 2,
-      avatar: 'https://randomuser.me/api/portraits/women/7.jpg',
-      isMuted: false
-    },
-    {
-      id: '30',
-      name: '旅行计划群',
-      lastMessage: '机票已订好',
-      time: '2023/11/28',
-      unread: 0,
-      avatar: 'https://randomuser.me/api/portraits/lego/30.jpg',
-      isMuted: false
-    }
   ]);
 
   // 底部导航栏
@@ -315,6 +108,27 @@ export default function HomeScreen() {
           <View style={styles.chatHeader}>
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.time}>{item.time}</Text>
+          </View>
+          <View style={styles.chatFooter}>
+            <Text
+                style={[
+                  styles.lastMessage,
+                  item.unread > 0 && styles.unreadMessage
+                ]}
+                numberOfLines={1}
+            >
+              {item.lastMessage}
+            </Text>
+            {item.unread > 0 && (
+                <View style={styles.unreadBadge}>
+                  <Text style={styles.unreadText}>
+                    {item.unread > 99 ? '99+' : item.unread}
+                  </Text>
+                </View>
+            )}
+            {item.isMuted && (
+                <Text style={styles.mutedIcon}>🔇</Text>
+            )}
           </View>
         </View>
       </TouchableOpacity>
@@ -344,6 +158,23 @@ export default function HomeScreen() {
             style={styles.chatList}
             showsVerticalScrollIndicator={false}
         />
+
+        {/* 底部导航栏 */}
+        <View style={styles.tabBar}>
+          {tabs.map(tab => (
+              <TouchableOpacity
+                  key={tab.id}
+                  style={[
+                    styles.tabItem,
+                    activeTab === tab.id && styles.activeTab
+                  ]}
+                  onPress={() => setActiveTab(tab.id)}
+              >
+                <Text style={styles.tabIcon}>{tab.icon}</Text>
+                <Text style={styles.tabText}>{tab.name}</Text>
+              </TouchableOpacity>
+          ))}
+        </View>
       </SafeAreaView>
   );
 };
