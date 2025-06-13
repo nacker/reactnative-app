@@ -14,11 +14,12 @@ export default function LoginScreen({ navigation }: any) {
     };
 
     const handleLogin = () => {
-        if (code === '1234') {
-            navigation.replace('MainTabs');
-        } else {
-            Alert.alert('验证码错误');
-        }
+        // if (code === '1234') {
+        //     navigation.replace('MainTabs');
+        // } else {
+        //     Alert.alert('验证码错误');
+        // }
+        navigation.replace('MainTabs');
     };
 
     return (
