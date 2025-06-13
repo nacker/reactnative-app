@@ -1,7 +1,18 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import {View, Text, StyleSheet, Platform} from 'react-native';
+import {useNavigation} from "@react-navigation/native";
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: '首页',
+      // headerTitleAlign: Platform.OS === 'web' ? 'left' : 'center',
+      headerTitleAlign: 'center',
+    });
+  }, [navigation]);
+
   return (
       <View style={styles.container}>
         <Text style={styles.text}>Welcome to React Native Template</Text>

@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function ProfileScreen() {
     const navigation = useNavigation<any>();
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: '我的',
+            headerTitleAlign: 'center',
+        });
+    }, [navigation]);
 
     return (
         <ScrollView style={styles.container}>
