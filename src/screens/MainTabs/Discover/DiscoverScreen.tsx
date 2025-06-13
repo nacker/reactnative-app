@@ -91,7 +91,10 @@ export default function DiscoverScreen()
                         >
                             <View style={styles.itemContent}>
                                 <Image
-                                    source={item.icon}
+                                    source={typeof item.icon === 'string'
+                                        ? { uri: item.icon }  // 网络图片
+                                        : item.icon           // 本地图片（已经require）
+                                    }
                                     style={styles.itemIcon}
                                     // resizeMode="contain" // 推荐添加resizeMode以确保图片正确显示
                                     // onError={(e) => console.log('图片加载失败', e.nativeEvent.error)}
