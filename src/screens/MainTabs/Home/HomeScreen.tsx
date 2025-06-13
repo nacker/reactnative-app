@@ -3,9 +3,9 @@ import { View, Text, StyleSheet } from 'react-native';
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Welcome to React Native Template</Text>
-    </View>
+      <View style={styles.container}>
+        <Text style={styles.text}>Welcome to React Native Template</Text>
+      </View>
   );
 }
 
