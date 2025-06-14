@@ -1,18 +1,19 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native";
 
-export default function DiscoverScreen()
-{
-    const navigation = useNavigation();
+export default function DiscoverScreen ({ navigation, route }: {navigation: any, route: any}) {
 
-    useLayoutEffect(() => {
+    // 动态设置标题
+    useEffect(() => {
         navigation.setOptions({
-            title: '发现',
-            headerTitleAlign: 'center',
+            title: route.params?.title || '发现',
+            // headerTitleAlign: Platform.OS === 'web' ? 'left' : 'center',
+            headerTitleAlign: 'center', // 标题居中（iOS默认居中，Android默认居左）
         });
-    }, [navigation]);
+    }, [navigation, route.params]);
+
 
 
     // 发现页功能列表数据

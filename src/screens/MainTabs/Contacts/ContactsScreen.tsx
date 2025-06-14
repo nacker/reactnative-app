@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import {
     View,
     Text,
@@ -133,23 +133,24 @@ const CONTACTS_DATA: ContactSection[] = [
 type SectionListDataType = ContactItem;
 type SectionListSectionType = ContactSection;
 
-export default function ContactsScreen() {
+export default function ContactsScreen({ navigation, route }: {navigation: any, route: any}) {
 
-    const navigation = useNavigation();
-
-    useLayoutEffect(() => {
+// 动态设置标题
+    useEffect(() => {
         navigation.setOptions({
-            title: '通讯录',
-            headerTitleAlign: 'center',
+            title: route.params?.title || '通讯录',
+            headerTitleAlign: 'center', // 标题居中（iOS默认居中，Android默认居左）
         });
-    }, [navigation]);
+    }, [navigation, route.params]);
 
 
     const renderItem = ({ item }: any) => {
         const isServiceItem = item.icon !== undefined;
 
         return (
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+                style={styles.item}
+            >
                 <Image
                     source={{ uri: isServiceItem ? item.icon : item.avatar }}
                     style={styles.avatar}

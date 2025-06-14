@@ -1,4 +1,4 @@
-import React, {useLayoutEffect , useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -10,18 +10,17 @@ import {
   SafeAreaView,
   StatusBar
 } from 'react-native';
-import {useNavigation} from "@react-navigation/native";
 
-export default function HomeScreen() {
-  const navigation = useNavigation();
+export default function HomeScreen({ navigation, route }: {navigation: any, route: any}) {
 
-  useLayoutEffect(() => {
+  // 动态设置标题
+  useEffect(() => {
     navigation.setOptions({
-      title: '首页',
+      title: route.params?.title || '首页',
       // headerTitleAlign: Platform.OS === 'web' ? 'left' : 'center',
-      headerTitleAlign: 'center',
+      headerTitleAlign: 'center', // 标题居中（iOS默认居中，Android默认居左）
     });
-  }, [navigation]);
+  }, [navigation, route.params]);
 
 
 // 聊天列表数据
@@ -309,15 +308,18 @@ export default function HomeScreen() {
 
   // 渲染聊天项
   const renderChatItem = ({ item }: { item: any }) => (
-      <TouchableOpacity style={styles.chatItem}>
-        <Image source={{ uri: item.avatar }} style={styles.avatar} />
-        <View style={styles.chatContent}>
-          <View style={styles.chatHeader}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.time}>{item.time}</Text>
-          </View>
+    <TouchableOpacity
+      style={styles.chatItem}
+      onPress={() => (navigation as any).navigate('Chat')}
+    >
+      <Image source={{ uri: item.avatar }} style={styles.avatar} />
+      <View style={styles.chatContent}>
+        <View style={styles.chatHeader}>
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.time}>{item.time}</Text>
         </View>
-      </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
   );
 
   return (

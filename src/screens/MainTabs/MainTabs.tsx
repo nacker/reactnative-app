@@ -2,10 +2,10 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Ionicons } from '@expo/vector-icons';
-import HomeScreen from "./Home/HomeScreen";
-import ContactsScreen from "./Contacts/ContactsScreen";
-import DiscoverScreen from "./Discover/DiscoverScreen";
 import ProfileScreen from "./Me/ProfileScreen";
+import HomeStack from "./Home/HomeStack";
+import ContactsStack from "./Contacts/ContactsStack";
+import DiscoverStack from "./Discover/DiscoverStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,9 +27,9 @@ export default function MainTabs() {
                 },
             })}
         >
-            <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: true, title: '首页'}} />
-            <Tab.Screen name="Contacts" component={ContactsScreen} options={{ headerShown: true , title: '通讯录' }} />
-            <Tab.Screen name="Discover" component={DiscoverScreen} options={{ headerShown: true , title: '发现' }} />
+            <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false, title: '首页'}} />
+            <Tab.Screen name="Contacts" component={ContactsStack} options={{ headerShown: false , title: '通讯录' }} />
+            <Tab.Screen name="Discover" component={DiscoverStack} options={{ headerShown: false , title: '发现' }} />
             <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: true , title: '我' }} />
         </Tab.Navigator>
     );

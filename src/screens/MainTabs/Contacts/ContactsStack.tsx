@@ -1,19 +1,18 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './HomeScreen';
-import ChatScreen from './ChatScreen';
+import ContactsScreen from "./ContactsScreen";
 
 const Stack = createStackNavigator();
 
-export default function HomeStack() {
+export default function ContactsStack() {
   return (
     <Stack.Navigator>
         <Stack.Screen
-            name="Home"
-            component={HomeScreen}
+            name="Contacts"
+            component={ContactsScreen}
             // options={{ headerShown: false}}
         />
-      <Stack.Screen name="Chat" component={ChatScreen} />
+      {/*<Stack.Screen name="Chat" component={ChatScreen} />*/}
     </Stack.Navigator>
   );
 }
