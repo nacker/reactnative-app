@@ -13,7 +13,7 @@ export default function HomeStack() {
             component={HomeScreen}
             // options={{ headerShown: false}}
         />
-      <Stack.Screen name="Chat" component={ChatScreen} />
+        <Stack.Screen name="Chat" component={ChatScreen} options={{headerShown:true}}/>
     </Stack.Navigator>
   );
 }
