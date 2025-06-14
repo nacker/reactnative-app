@@ -297,15 +297,6 @@ export default function HomeScreen({ navigation, route }: {navigation: any, rout
     }
   ]);
 
-  // 底部导航栏
-  const tabs = [
-    { id: '1', name: '微信', icon: '💬' },
-    { id: '2', name: '通讯录', icon: '👥' },
-    { id: '3', name: '发现', icon: '🔍' },
-    { id: '4', name: '我', icon: '👤' }
-  ];
-  const [activeTab, setActiveTab] = useState('1');
-
   // 渲染聊天项
   const renderChatItem = ({ item }: { item: any }) => (
     <TouchableOpacity

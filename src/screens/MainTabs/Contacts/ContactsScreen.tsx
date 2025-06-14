@@ -150,6 +150,17 @@ export default function ContactsScreen({ navigation, route }: {navigation: any, 
         return (
             <TouchableOpacity
                 style={styles.item}
+                // 添加点击事件处理（关键修改）
+                onPress={() => {
+                    // 仅非服务项（好友）触发聊天跳转
+                    if (!isServiceItem) {
+                        navigation.navigate('Chat', {  // 假设聊天页面路由名为'Chat'
+                            chatId: item.id,          // 传递好友ID
+                            chatName: item.name,      // 传递好友名称
+                            chatAvatar: item.avatar   // 传递好友头像
+                        });
+                    }
+                }}
             >
                 <Image
                     source={{ uri: isServiceItem ? item.icon : item.avatar }}
