@@ -1,5 +1,5 @@
 import apiClient from './index';
-import { ApiResponse } from './types';
+import {ApiResponse, RequestMethod} from './types';
 
 /**
  * 发起网络请求
@@ -10,7 +10,7 @@ import { ApiResponse } from './types';
  */
 export async function request<T>(
     url: string,
-    method: 'get' | 'post' | 'put' | 'delete' | 'patch',
+    method: RequestMethod,
     data?: any,
     params?: any
 ): Promise<ApiResponse<T>> {

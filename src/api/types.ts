@@ -6,4 +6,10 @@ export interface ApiResponse<T = any> {
 }
 
 // HTTP 方法枚举
-export type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
+export enum RequestMethod {
+  GET = 'get',
+  POST = 'post',
+  PUT = 'put',
+  DELETE = 'delete',
+  PATCH = 'patch'
+}
