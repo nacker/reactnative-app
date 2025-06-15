@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { setToken } from '../../store/slices/userSlice';
+import { useDispatch } from 'react-redux';
 
 export default function LoginScreen({ navigation }: any) {
     const [phone, setPhone] = useState('');
@@ -19,6 +21,10 @@ export default function LoginScreen({ navigation }: any) {
         // } else {
         //     Alert.alert('验证码错误');
         // }
+        const token = '1234';
+        const dispatch = useDispatch();
+        dispatch(setToken(token));
+
         navigation.replace('MainTabs');
     };
 
