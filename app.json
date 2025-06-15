@@ -6,7 +6,11 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -17,14 +21,27 @@
       "supportsTablet": true
     },
     "android": {
+      "buildType": "apk",
+      "credentialsSource": "auto",
+      "package": "com.twinswolves.chat",
+      "version": "1.0.1",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "permissions": [],
+      "edgeToEdgeEnabled": true,
+      "icon": "./assets/icon.png"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "10fb5f6f-8e20-427b-8f0e-2c77fcc265ea"
+      }
+    },
+    "owner": "nacker"
   }
 }

@@ -4,7 +4,8 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function SplashScreen({ navigation }: any) {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('Login');
+      // navigation.replace('Login');
+      navigation.replace('MainTabs');
     }, 1500);
     return () => clearTimeout(timer);
   }, [navigation]);

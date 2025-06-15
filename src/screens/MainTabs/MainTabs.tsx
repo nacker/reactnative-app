@@ -6,6 +6,7 @@ import ProfileScreen from "./Me/ProfileScreen";
 import HomeStack from "./Home/HomeStack";
 import ContactsStack from "./Contacts/ContactsStack";
 import DiscoverStack from "./Discover/DiscoverStack";
+import ProfileStack from "./Me/ProfileStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +31,7 @@ export default function MainTabs() {
             <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false, title: '首页'}} />
             <Tab.Screen name="Contacts" component={ContactsStack} options={{ headerShown: false , title: '通讯录' }} />
             <Tab.Screen name="Discover" component={DiscoverStack} options={{ headerShown: false , title: '发现' }} />
-            <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: true , title: '我' }} />
+            <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false , title: '我' }} />
         </Tab.Navigator>
     );
 }

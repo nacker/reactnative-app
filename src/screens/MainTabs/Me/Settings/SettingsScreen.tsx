@@ -1,8 +1,19 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React, {useEffect, useLayoutEffect} from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Image, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 
-export default function SettingsScreen() {
+// 设置页面
+export function SettingsScreen({ navigation, route }: {navigation: any, route: any}) {
+    // const navigation = useNavigation<any>();
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: '设置',
+            headerTitleAlign: 'center', // 标题居中（iOS默认居中，Android默认居左）
+        });
+    }, [navigation]);
+
     const handleLogout = () => {
         Alert.alert('退出登录', '确定要退出吗？', [
             { text: '取消', style: 'cancel' },
@@ -31,7 +42,11 @@ export default function SettingsScreen() {
 
             <View style={styles.group}>
                 <SettingItem icon="help-circle" label="帮助与反馈" onPress={() => {}} />
-                <SettingItem icon="information-circle" label="关于微信" onPress={() => {}} />
+                <SettingItem
+                    icon="information-circle"
+                    label="关于我们"
+                    onPress={() => navigation.navigate('AboutUs')}
+                />
             </View>
 
             <View style={styles.footer}>
@@ -63,6 +78,7 @@ function SettingItem({
     );
 }
 
+// 设置页面样式
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -106,3 +122,4 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
 });
+
