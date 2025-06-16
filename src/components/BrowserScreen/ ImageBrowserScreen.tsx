@@ -29,6 +29,9 @@ const ImageBrowserScreen: React.FC<ImageBrowserProps> = ({ route }) => {
                 onSwipeDown={() => {
                     navigation.goBack(); // 下滑关闭页面
                 }}
+                onClick={() => {
+                    navigation.goBack();
+                }}
                 saveToLocalByLongPress={false} // 禁用长按保存功能
                 backgroundColor="black" // 背景颜色
                 maxOverflow={300} // 最大缩放比例
@@ -40,7 +43,7 @@ const ImageBrowserScreen: React.FC<ImageBrowserProps> = ({ route }) => {
                     return (
                         <View style={styles.indicatorContainer}>
                             <Text style={styles.indicatorText}>
-                                {safeCurrentIndex + 1}/{safeAllSize}
+                                {safeCurrentIndex}/{safeAllSize}
                             </Text>
                         </View>
                     );

@@ -5,36 +5,32 @@ import {
     StyleSheet,
     ScrollView,
     TouchableOpacity,
-    ActivityIndicator, Alert,
+    ActivityIndicator,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import {RootStackParamList} from "../../../types/navigation.type";
-import {StackNavigationProp} from "@react-navigation/stack";
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../types/navigation.type';
 
-// 使用 StackNavigationProp 指定导航器的参数类型
 type DiscoverScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ImageBrowser'>;
 
 export default function DiscoverScreen() {
-    // 模拟微博数据
     const [weiboList, setWeiboList] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
 
-    // 明确指定导航参数类型
     const navigation = useNavigation<DiscoverScreenNavigationProp>();
 
-    // 模拟加载微博数据
     const loadWeiboData = () => {
         setLoading(true);
         setTimeout(() => {
             const newData = Array.from({ length: 5 }, (_, i) => ({
                 id: `${page}-${i}`,
-                avatar: `https://randomuser.me/api/portraits/women/3.jpg`,
+                avatar: `https://randomuser.me/api/portraits/women/${(page * 5 + i) % 100}.jpg`,
                 nickname: `用户_${page}${i}`,
                 time: '3分钟前',
-                content: `这是一条微博内容，来自用户_${page}${i}。`,
+                content: `这是第 ${page}-${i} 条微博内容。`,
                 images: [
                     'https://resume.yihaoredian.com.cn/0.jpg',
                     'https://resume.yihaoredian.com.cn/1.jpg',
@@ -45,24 +41,69 @@ export default function DiscoverScreen() {
                     'https://resume.yihaoredian.com.cn/6.jpg',
                     'https://resume.yihaoredian.com.cn/7.jpg',
                     'https://resume.yihaoredian.com.cn/8.jpg',
-                ].slice(0, Math.floor(Math.random() * 10)) // 随机生成0-9张图片
+                ].slice(0, Math.floor(Math.random() * 9) + 1),
             }));
             setWeiboList(prev => [...prev, ...newData]);
             setLoading(false);
         }, 1000);
     };
 
-    // 初始化加载数据
     useEffect(() => {
         loadWeiboData();
     }, []);
 
-    // 加载更多数据
     const handleLoadMore = () => {
         if (!loading) {
             setPage(prev => prev + 1);
             loadWeiboData();
         }
+    };
+
+    const renderImages = (images: string[], postId: string) => {
+        const count = images.length;
+
+        if (count === 1) {
+            return (
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('ImageBrowser', { images, index: 0 })}
+                    activeOpacity={0.85}
+                    style={{ marginBottom: 10 }}
+                >
+                    <Image
+                        source={{ uri: images[0] }}
+                        style={styles.singleImage}
+                        contentFit="cover"
+                    />
+                </TouchableOpacity>
+            );
+        }
+
+        const getImageSize = () => {
+            if (count === 2) return '48%';
+            if (count === 4) return '48%';
+            return '31%'; // for 3, 5, 6, 7, 8, 9
+        };
+
+        const imageSize = getImageSize();
+
+        return (
+            <View style={styles.imageContainer}>
+                {images.map((img, idx) => (
+                    <TouchableOpacity
+                        key={`${postId}-${idx}`}
+                        onPress={() => navigation.navigate('ImageBrowser', { images, index: idx })}
+                        activeOpacity={0.85}
+                        style={[styles.gridImageWrapper, { width: imageSize }]}
+                    >
+                        <Image
+                            source={{ uri: img }}
+                            style={styles.gridImage}
+                            contentFit="cover"
+                        />
+                    </TouchableOpacity>
+                ))}
+            </View>
+        );
     };
 
     return (
@@ -71,17 +112,14 @@ export default function DiscoverScreen() {
                 style={styles.scrollView}
                 onScroll={({ nativeEvent }) => {
                     const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-                    const isNearBottom =
-                        layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
-                    if (isNearBottom) {
+                    if (layoutMeasurement.height + contentOffset.y >= contentSize.height - 20) {
                         handleLoadMore();
                     }
                 }}
-                scrollEventThrottle={400} // 节流，避免频繁触发
+                scrollEventThrottle={400}
             >
-                {/* 微博列表 */}
                 {weiboList.map(item => (
-                    <TouchableOpacity key={item.id} style={styles.weiboItem}>
+                    <View key={item.id} style={styles.weiboItem}>
                         {/* 用户信息 */}
                         <View style={styles.userInfo}>
                             <Image source={{ uri: item.avatar }} style={styles.avatar} contentFit="cover" />
@@ -91,56 +129,13 @@ export default function DiscoverScreen() {
                             </View>
                         </View>
 
-                        {/* 微博内容 */}
+                        {/* 内容 */}
                         <Text style={styles.content}>{item.content}</Text>
 
-                        {/* 图片区域 */}
-                        {item.images.length > 0 && (
-                            <View style={styles.imageContainer}>
-                                {item.images.map((image: string, index: number) => {
-                                    // 根据图片数量动态调整样式
-                                    const imageStyle =
-                                        item.images.length === 1
-                                            ? styles.singleImage
-                                            : item.images.length === 2
-                                                ? styles.doubleImage
-                                                : item.images.length === 3
-                                                    ? styles.tripleImage
-                                                    : item.images.length === 4
-                                                        ? styles.gridImageSmall
-                                                        : item.images.length <= 6
-                                                            ? styles.gridImageMedium
-                                                            : styles.gridImage;
+                        {/* 图片布局 */}
+                        {renderImages(item.images, item.id)}
 
-                                    return (
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                // 导航到 ImageBrowser 页面
-                                                navigation.navigate('ImageBrowser', {
-                                                    images: item.images,
-                                                    index: index
-                                                });
-                                            }}
-                                            // 设置与 Image 相同的样式，确保有足够的空间显示图片
-                                            style={imageStyle}
-                                        >
-                                            <Image
-                                                key={index}
-                                                source={{ uri: image }}
-                                                style={imageStyle}
-                                                contentFit="cover"
-                                                // 添加加载失败处理
-                                                onError={(error) => console.log('图片加载失败:', error)}
-                                                // 添加加载完成回调
-                                                onLoad={() => console.log('图片加载成功')}
-                                            />
-                                        </TouchableOpacity>
-                                    );
-                                })}
-                            </View>
-                        )}
-
-                        {/* 底部操作栏 */}
+                        {/* 操作栏 */}
                         <View style={styles.actionBar}>
                             <TouchableOpacity style={styles.actionButton}>
                                 <Ionicons name="chatbubble-outline" size={18} color="#999" />
@@ -151,10 +146,10 @@ export default function DiscoverScreen() {
                                 <Text style={styles.actionText}>点赞</Text>
                             </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
+                    </View>
                 ))}
 
-                {/* 加载更多提示 */}
+                {/* 加载更多 */}
                 {loading && (
                     <View style={styles.loadingContainer}>
                         <ActivityIndicator size="small" color="#007AFF" />
@@ -166,90 +161,42 @@ export default function DiscoverScreen() {
     );
 }
 
-// 样式定义
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f5f5',
-    },
-    scrollView: {
-        padding: 10,
-    },
+    container: { flex: 1, backgroundColor: '#f5f5f5' },
+    scrollView: { padding: 10 },
     weiboItem: {
         backgroundColor: '#fff',
         borderRadius: 8,
-        marginBottom: 10,
+        marginBottom: 12,
         padding: 12,
     },
-    userInfo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    avatar: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        marginRight: 10,
-        backgroundColor: '#ccc',
-    },
-    userInfoText: {
-        flex: 1,
-    },
-    nickname: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#333',
-    },
-    time: {
-        fontSize: 12,
-        color: '#999',
-        marginTop: 2,
-    },
-    content: {
-        fontSize: 14,
-        color: '#333',
-        lineHeight: 20,
-        marginBottom: 10,
-    },
+    userInfo: { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
+    avatar: { width: 40, height: 40, borderRadius: 20, marginRight: 10 },
+    userInfoText: { flex: 1 },
+    nickname: { fontSize: 16, fontWeight: 'bold', color: '#333' },
+    time: { fontSize: 12, color: '#999' },
+    content: { fontSize: 14, color: '#333', marginBottom: 10 },
     imageContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
+        justifyContent: 'flex-start',
+        gap: 6,
         marginBottom: 10,
     },
     singleImage: {
         width: '100%',
-        aspectRatio: 16 / 9, // 单张图片显示为宽图
+        aspectRatio: 16 / 9,
         borderRadius: 8,
     },
-    doubleImage: {
-        width: '49%', // 两张图片显示为两列
+    gridImageWrapper: {
         aspectRatio: 1,
-        margin: '0.5%',
+        marginBottom: 6,
         borderRadius: 8,
-    },
-    tripleImage: {
-        width: '32%', // 三张图片显示为一行三列
-        aspectRatio: 1,
-        margin: '0.5%',
-        borderRadius: 8,
-    },
-    gridImageSmall: {
-        width: '49%', // 四张及以下图片显示为两列布局
-        aspectRatio: 1,
-        margin: '0.5%',
-        borderRadius: 8,
-    },
-    gridImageMedium: {
-        width: '32%', // 五到六张图片显示为两行三列
-        aspectRatio: 1,
-        margin: '0.5%',
-        borderRadius: 8,
+        overflow: 'hidden',
     },
     gridImage: {
-        width: '32%', // 五张及以上图片显示为三列布局
-        aspectRatio: 1,
-        margin: '0.5%',
+        width: '100%',
+        height: '100%',
         borderRadius: 8,
     },
     actionBar: {
