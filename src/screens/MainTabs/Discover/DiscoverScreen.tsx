@@ -3,18 +3,27 @@ import {
     View,
     Text,
     StyleSheet,
-    Image,
     ScrollView,
     TouchableOpacity,
-    ActivityIndicator,
+    ActivityIndicator, Alert,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import {RootStackParamList} from "../../../types/navigation.type";
+import {StackNavigationProp} from "@react-navigation/stack";
+
+// 使用 StackNavigationProp 指定导航器的参数类型
+type DiscoverScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ImageBrowser'>;
 
 export default function DiscoverScreen() {
     // 模拟微博数据
     const [weiboList, setWeiboList] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
+
+    // 明确指定导航参数类型
+    const navigation = useNavigation<DiscoverScreenNavigationProp>();
 
     // 模拟加载微博数据
     const loadWeiboData = () => {
@@ -75,7 +84,7 @@ export default function DiscoverScreen() {
                     <TouchableOpacity key={item.id} style={styles.weiboItem}>
                         {/* 用户信息 */}
                         <View style={styles.userInfo}>
-                            <Image source={{ uri: item.avatar }} style={styles.avatar} />
+                            <Image source={{ uri: item.avatar }} style={styles.avatar} contentFit="cover" />
                             <View style={styles.userInfoText}>
                                 <Text style={styles.nickname}>{item.nickname}</Text>
                                 <Text style={styles.time}>{item.time}</Text>
@@ -104,11 +113,28 @@ export default function DiscoverScreen() {
                                                             : styles.gridImage;
 
                                     return (
-                                        <Image
-                                            key={index}
-                                            source={{ uri: image }}
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                // 导航到 ImageBrowser 页面
+                                                navigation.navigate('ImageBrowser', {
+                                                    images: item.images,
+                                                    index: index
+                                                });
+                                            }}
+                                            // 设置与 Image 相同的样式，确保有足够的空间显示图片
                                             style={imageStyle}
-                                        />
+                                        >
+                                            <Image
+                                                key={index}
+                                                source={{ uri: image }}
+                                                style={imageStyle}
+                                                contentFit="cover"
+                                                // 添加加载失败处理
+                                                onError={(error) => console.log('图片加载失败:', error)}
+                                                // 添加加载完成回调
+                                                onLoad={() => console.log('图片加载成功')}
+                                            />
+                                        </TouchableOpacity>
                                     );
                                 })}
                             </View>
