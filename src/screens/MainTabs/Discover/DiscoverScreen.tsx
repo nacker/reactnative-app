@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     View,
     Text,
     StyleSheet,
-    ScrollView,
     RefreshControl,
     TouchableOpacity,
     ActivityIndicator,
+    FlatList,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from "../../../types/navigation.type";
+import { RootStackParamList } from '../../../types/navigation.type';
 
 type DiscoverScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ImageBrowser'>;
 
@@ -21,7 +21,6 @@ export default function DiscoverScreen() {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [refreshing, setRefreshing] = useState(false);
-
     const navigation = useNavigation<DiscoverScreenNavigationProp>();
 
     const generateWeiboData = (pageNum: number) => {
@@ -45,11 +44,11 @@ export default function DiscoverScreen() {
         }));
     };
 
-    const loadWeiboData = () => {
+    const loadWeiboData = (pageNum: number, replace = false) => {
         setLoading(true);
         setTimeout(() => {
-            const newData = generateWeiboData(page);
-            setWeiboList(prev => [...prev, ...newData]);
+            const newData = generateWeiboData(pageNum);
+            setWeiboList(prev => (replace ? newData : [...prev, ...newData]));
             setLoading(false);
         }, 1000);
     };
@@ -57,24 +56,20 @@ export default function DiscoverScreen() {
     const handleRefresh = () => {
         setRefreshing(true);
         setPage(1);
-        setTimeout(() => {
-            const newData = generateWeiboData(1);
-            setWeiboList(newData);
-            setRefreshing(false);
-        }, 1000);
+        loadWeiboData(1, true);
+        setRefreshing(false);
     };
 
     const handleLoadMore = () => {
         if (!loading) {
             const nextPage = page + 1;
             setPage(nextPage);
-            const newData = generateWeiboData(nextPage);
-            setWeiboList(prev => [...prev, ...newData]);
+            loadWeiboData(nextPage);
         }
     };
 
     useEffect(() => {
-        loadWeiboData();
+        loadWeiboData(1, true);
     }, []);
 
     const getImageStyle = (count: number) => {
@@ -86,10 +81,57 @@ export default function DiscoverScreen() {
         return styles.grid3x3;
     };
 
+    const renderItem = useCallback(({ item }: { item: any }) => (
+        <TouchableOpacity key={item.id} style={styles.weiboItem}>
+            <View style={styles.userInfo}>
+                <Image source={{ uri: item.avatar }} style={styles.avatar} contentFit="cover" />
+                <View style={styles.userInfoText}>
+                    <Text style={styles.nickname}>{item.nickname}</Text>
+                    <Text style={styles.time}>{item.time}</Text>
+                </View>
+            </View>
+
+            <Text style={styles.content}>{item.content}</Text>
+
+            {item.images.length > 0 && (
+                <View style={styles.imageContainer}>
+                    {item.images.map((image: string, index: number) => (
+                        <TouchableOpacity
+                            key={index}
+                            onPress={() =>
+                                navigation.navigate('ImageBrowser', {
+                                    images: item.images,
+                                    index: index,
+                                })
+                            }
+                            style={getImageStyle(item.images.length)}
+                            activeOpacity={0.8}
+                        >
+                            <Image source={{ uri: image }} style={StyleSheet.absoluteFill} contentFit="cover" />
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            )}
+
+            <View style={styles.actionBar}>
+                <TouchableOpacity style={styles.actionButton}>
+                    <Ionicons name="chatbubble-outline" size={18} color="#999" />
+                    <Text style={styles.actionText}>评论</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.actionButton}>
+                    <Ionicons name="heart-outline" size={18} color="#999" />
+                    <Text style={styles.actionText}>点赞</Text>
+                </TouchableOpacity>
+            </View>
+        </TouchableOpacity>
+    ), []);
+
     return (
         <View style={styles.container}>
-            <ScrollView
-                style={styles.scrollView}
+            <FlatList
+                data={weiboList}
+                keyExtractor={(item) => item.id}
+                renderItem={renderItem}
                 refreshControl={
                     <RefreshControl
                         refreshing={refreshing}
@@ -100,79 +142,24 @@ export default function DiscoverScreen() {
                         titleColor="#007AFF"
                     />
                 }
-                onScroll={({ nativeEvent }) => {
-                    const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-                    const isNearBottom =
-                        layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
-                    if (isNearBottom) {
-                        handleLoadMore();
-                    }
-                }}
-                scrollEventThrottle={400}
-            >
-                {weiboList.map(item => (
-                    <TouchableOpacity key={item.id} style={styles.weiboItem}>
-                        <View style={styles.userInfo}>
-                            <Image source={{ uri: item.avatar }} style={styles.avatar} contentFit="cover" />
-                            <View style={styles.userInfoText}>
-                                <Text style={styles.nickname}>{item.nickname}</Text>
-                                <Text style={styles.time}>{item.time}</Text>
-                            </View>
+                onEndReached={handleLoadMore}
+                onEndReachedThreshold={0.3}
+                ListFooterComponent={
+                    loading ? (
+                        <View style={styles.loadingContainer}>
+                            <ActivityIndicator size="small" color="#007AFF" />
+                            <Text style={styles.loadingText}>加载中...</Text>
                         </View>
-
-                        <Text style={styles.content}>{item.content}</Text>
-
-                        {item.images.length > 0 && (
-                            <View style={styles.imageContainer}>
-                                {item.images.map((image: string, index: number) => (
-                                    <TouchableOpacity
-                                        key={index}
-                                        onPress={() => {
-                                            navigation.navigate('ImageBrowser', {
-                                                images: item.images,
-                                                index: index
-                                            });
-                                        }}
-                                        style={getImageStyle(item.images.length)}
-                                        activeOpacity={0.8}
-                                    >
-                                        <Image
-                                            source={{ uri: image }}
-                                            style={StyleSheet.absoluteFill}
-                                            contentFit="cover"
-                                        />
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
-                        )}
-
-                        <View style={styles.actionBar}>
-                            <TouchableOpacity style={styles.actionButton}>
-                                <Ionicons name="chatbubble-outline" size={18} color="#999" />
-                                <Text style={styles.actionText}>评论</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.actionButton}>
-                                <Ionicons name="heart-outline" size={18} color="#999" />
-                                <Text style={styles.actionText}>点赞</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </TouchableOpacity>
-                ))}
-
-                {loading && (
-                    <View style={styles.loadingContainer}>
-                        <ActivityIndicator size="small" color="#007AFF" />
-                        <Text style={styles.loadingText}>加载中...</Text>
-                    </View>
-                )}
-            </ScrollView>
+                    ) : null
+                }
+                contentContainerStyle={{ paddingHorizontal: 5, paddingBottom: 20 }}
+            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#f5f5f5' },
-    scrollView: { marginLeft: 5, marginRight: 5 },
     weiboItem: {
         backgroundColor: '#fff',
         borderRadius: 8,
