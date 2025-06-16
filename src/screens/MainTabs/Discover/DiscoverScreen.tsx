@@ -22,7 +22,7 @@ export default function DiscoverScreen() {
         setTimeout(() => {
             const newData = Array.from({ length: 5 }, (_, i) => ({
                 id: `${page}-${i}`,
-                avatar: `https://randomuser.me/api/portraits/lego/7.jpg`,
+                avatar: `https://randomuser.me/api/portraits/women/3.jpg`,
                 nickname: `用户_${page}${i}`,
                 time: '3分钟前',
                 content: `这是一条微博内容，来自用户_${page}${i}。`,
@@ -123,10 +123,6 @@ export default function DiscoverScreen() {
                             <TouchableOpacity style={styles.actionButton}>
                                 <Ionicons name="heart-outline" size={18} color="#999" />
                                 <Text style={styles.actionText}>点赞</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.actionButton}>
-                                <Ionicons name="share-social-outline" size={18} color="#999" />
-                                <Text style={styles.actionText}>转发</Text>
                             </TouchableOpacity>
                         </View>
                     </TouchableOpacity>
