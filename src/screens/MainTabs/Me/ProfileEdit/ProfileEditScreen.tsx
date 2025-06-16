@@ -8,6 +8,7 @@ import {
     ScrollView, Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import {Ionicons} from "@expo/vector-icons";
 
 // 定义用户资料类型
 interface ProfileDataType {
@@ -96,7 +97,7 @@ export default function ProfileEditScreen() {
                 <ProfileItem label="学校" fieldName="school" value={profileData.school} onChangeText={handleChange} />
 
                 {/* 抖音号 */}
-                <ProfileItem label="抖音号" fieldName="username" value={profileData.username} onChangeText={handleChange} editable={false} />
+                {/*<ProfileItem label="抖音号" fieldName="username" value={profileData.username} onChangeText={handleChange} editable={false} />*/}
             </View>
 
             {/* 保存按钮 */}
@@ -128,7 +129,7 @@ const ProfileItem: React.FC<ProfileItemProps> = ({
             <Text style={styles.itemLabel}>{label}</Text>
             <View style={styles.itemValueContainer}>
                 <Text style={styles.itemValue}>{value}</Text>
-                <Text style={styles.arrowIcon}>&gt;</Text>
+                <Ionicons name="chevron-forward" size={20} color="#999" />
             </View>
         </TouchableOpacity>
     );
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: '#eee',
-        height: 48,
+        height: 58,
     },
     itemLabel: {
         fontSize: 16,
