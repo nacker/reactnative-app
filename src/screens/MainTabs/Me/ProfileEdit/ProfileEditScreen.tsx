@@ -1,139 +1,111 @@
 import React, { useState } from 'react';
-// 导入React核心库和useState钩子用于状态管理
 import {
-    View,          // 基础容器组件
-    Text,          // 文本显示组件
-    Image,         // 图片显示组件
-    TouchableOpacity, // 可点击的交互组件
-    StyleSheet,    // 样式表创建工具
-    ScrollView,    // 滚动容器组件
-    Alert,         // 系统提示对话框
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    StyleSheet,
+    ScrollView,
+    Alert,
 } from 'react-native';
-// 导入React Native基础组件
 import { useNavigation } from '@react-navigation/native';
-// 导入导航钩子用于页面导航
-import {Ionicons} from "@expo/vector-icons";
-// 导入Expo图标库
+import { Ionicons } from '@expo/vector-icons';
 
 // 定义用户资料数据类型接口
-// 包含用户所有可编辑的个人信息字段
 interface ProfileDataType {
-    name: string;       // 用户姓名
-    bio: string;        // 个人简介
-    gender: string;     // 性别
-    birthday: string;   // 生日
-    location: string;   // 所在地
-    school: string;     // 学校
-    username: string;   // 用户名
-    avatar: string;     // 头像URL
+    name: string;
+    bio: string;
+    gender: string;
+    birthday: string;
+    location: string;
+    school: string;
+    username: string;
+    avatar: string;
 }
 
-// 个人资料编辑屏幕组件
-// 用于展示和编辑用户的个人信息
 export default function ProfileEditScreen() {
     const navigation = useNavigation();
-    // 获取导航对象用于页面跳转
 
-    // 初始化用户资料数据状态
-    // 使用useState钩子管理用户资料数据
+    // 初始化用户数据
     const [profileData, setProfileData] = useState<ProfileDataType>({
-        name: '带头二哥',                          // 默认姓名
-        bio: '介绍喜好、个性或@你的亲友',           // 默认个人简介
-        gender: '男',                              // 默认性别
-        birthday: '不展示',                        // 默认生日设置
-        location: '美国·纽约·法拉盛·East Elmhurst', // 默认所在地
-        school: '填写学校，发现校友',               // 默认学校信息
-        username: 'nacker',                        // 默认用户名
-        avatar: 'https://via.placeholder.com/100', // 默认头像URL
+        name: '带头二哥',
+        bio: '介绍喜好、个性或@你的亲友',
+        gender: '男',
+        birthday: '不展示',
+        location: '美国·纽约·法拉盛·East Elmhurst',
+        school: '填写学校，发现校友',
+        username: 'nacker',
+        avatar: 'https://via.placeholder.com/100',
     });
 
     // 输入框变化处理函数
-    // 用于更新对应字段的用户资料数据
-    // 参数: field - 要更新的字段名, value - 新的字段值
     const handleChange = (field: keyof ProfileDataType, value: string) => {
         setProfileData(prev => ({
-            ...prev,               // 保留原有数据
-            [field]: value,        // 更新指定字段的值
+            ...prev,
+            [field]: value,
         }));
     };
 
-    // 提交表单处理函数
-    // 用于保存用户编辑后的资料信息
+    // 提交表单
     const handleSubmit = () => {
-        // 模拟保存逻辑 - 在控制台打印保存的数据
         console.log('保存的数据:', profileData);
-        // 显示保存成功提示对话框
         Alert.alert('保存成功', '您的资料已更新', [
-            { text: '确定', onPress: () => navigation.goBack() }, // 点击确定返回上一页
+            { text: '确定', onPress: () => navigation.goBack() },
         ]);
     };
 
-    // 渲染组件UI
     return (
-        <ScrollView style={styles.container}> {/* 可滚动容器，用于适配小屏幕设备 */}
-            {/* 顶部区域 - 包含封面图、头像和资料完成度 */}
-            <View style={styles.header}>
-                {/* 封面图 */}
-                <Image source={{ uri: 'https://via.placeholder.com/600x200' }} style={styles.coverImage} />
+        <View style={styles.outerContainer}>
+            {/* 可滚动内容 */}
+            <ScrollView style={styles.container}>
+                {/* 顶部区域 */}
+                <View style={styles.header}>
+                    {/* 封面图 */}
+                    <Image source={{ uri: 'https://via.placeholder.com/600x200' }} style={styles.coverImage} />
 
-                {/* 头像区域 */}
-                <TouchableOpacity style={styles.avatarContainer} onPress={() => console.log('更换头像')}>
-                    <Image source={{ uri: profileData.avatar }} style={styles.avatar} />
-                    <Text style={styles.changeAvatar}>更换头像</Text>
-                </TouchableOpacity>
+                    {/* 头像 */}
+                    <TouchableOpacity style={styles.avatarContainer} onPress={() => console.log('更换头像')}>
+                        <Image source={{ uri: profileData.avatar }} style={styles.avatar} />
+                        <Text style={styles.changeAvatar}>更换头像</Text>
+                    </TouchableOpacity>
 
-                {/* 资料完成度指示器 */}
-                <View style={styles.completionRate}>
-                    <View style={styles.progressBar}>
-                        <View style={styles.progressFilled} />
+                    {/* 资料完成度 */}
+                    <View style={styles.completionRate}>
+                        <View style={styles.progressBar}>
+                            <View style={styles.progressFilled} />
+                        </View>
+                        <Text style={styles.completionText}>资料完成度 70%</Text>
                     </View>
-                    <Text style={styles.completionText}>资料完成度 70%</Text>
                 </View>
-            </View>
 
-            {/* 内容区域 - 包含所有可编辑的资料项 */}
-            <View style={styles.content}>
-                {/* 名字编辑项 */}
-                <ProfileItem label="名字" fieldName="name" value={profileData.name} onChangeText={handleChange} />
+                {/* 内容区域 */}
+                <View style={styles.content}>
+                    <ProfileItem label="名字" fieldName="name" value={profileData.name} onChangeText={handleChange} />
+                    <ProfileItem label="简介" fieldName="bio" value={profileData.bio} onChangeText={handleChange} />
+                    <ProfileItem label="性别" fieldName="gender" value={profileData.gender} onChangeText={handleChange} />
+                    <ProfileItem label="生日" fieldName="birthday" value={profileData.birthday} onChangeText={handleChange} />
+                    <ProfileItem label="所在地" fieldName="location" value={profileData.location} onChangeText={handleChange} />
+                    <ProfileItem label="学校" fieldName="school" value={profileData.school} onChangeText={handleChange} />
+                </View>
+            </ScrollView>
 
-                {/* 简介编辑项 */}
-                <ProfileItem label="简介" fieldName="bio" value={profileData.bio} onChangeText={handleChange} />
-
-                {/* 性别编辑项 */}
-                <ProfileItem label="性别" fieldName="gender" value={profileData.gender} onChangeText={handleChange} />
-
-                {/* 生日编辑项 */}
-                <ProfileItem label="生日" fieldName="birthday" value={profileData.birthday} onChangeText={handleChange} />
-
-                {/* 所在地编辑项 */}
-                <ProfileItem label="所在地" fieldName="location" value={profileData.location} onChangeText={handleChange} />
-
-                {/* 学校编辑项 */}
-                <ProfileItem label="学校" fieldName="school" value={profileData.school} onChangeText={handleChange} />
-
-                {/* 抖音号编辑项 - 当前被注释掉 */}
-                {/*<ProfileItem label="抖音号" fieldName="username" value={profileData.username} onChangeText={handleChange} editable={false} />*/}
-            </View>
-
-            {/* 保存按钮 */}
+            {/* 底部保存按钮 */}
             <TouchableOpacity style={styles.saveButton} onPress={handleSubmit}>
                 <Text style={styles.saveButtonText}>保存</Text>
             </TouchableOpacity>
-        </ScrollView>
+        </View>
     );
 }
 
-// 子组件：单个资料项组件
-// 用于展示和编辑单个用户资料字段
+// 子组件：单个资料项
 type ProfileItemProps = {
-    label: string;                          // 资料项标签名
-    fieldName: keyof ProfileDataType;       // 对应的数据字段名
-    value: string;                          // 当前值
-    onChangeText: (field: keyof ProfileDataType, value: string) => void; // 值变化回调函数
-    editable?: boolean;                     // 是否可编辑，默认为true
+    label: string;
+    fieldName: keyof ProfileDataType;
+    value: string;
+    onChangeText: (field: keyof ProfileDataType, value: string) => void;
+    editable?: boolean;
 };
 
-// 资料项组件实现
 const ProfileItem: React.FC<ProfileItemProps> = ({
                                                      label,
                                                      fieldName,
@@ -153,11 +125,14 @@ const ProfileItem: React.FC<ProfileItemProps> = ({
 };
 
 // 样式定义
-// 使用StyleSheet.create创建组件样式
 const styles = StyleSheet.create({
+    outerContainer: {
+        flex: 1, // 占据整个可用空间
+        backgroundColor: '#fff', // 背景色为白色
+    },
     container: {
-        flex: 1,                  // 占据整个可用空间
-        backgroundColor: '#fff',  // 背景色为白色
+        flexGrow: 1, // 确保 ScrollView 可以占据剩余空间
+        // paddingBottom: 80, // 为底部按钮留出空间
     },
     header: {
         backgroundColor: '#fff',                  // 背景色为白色
@@ -240,19 +215,18 @@ const styles = StyleSheet.create({
         color: '#999',            // 文字颜色为浅灰色
     },
     saveButton: {
-        position: 'absolute',      // 设置为绝对定位
-        bottom: 20,                // 距离屏幕底部20个单位
-        left: 20,               // 距离屏幕左侧10%宽度
-        right: 20,              // 距离屏幕右侧10%宽度
-        backgroundColor: '#007AFF', // 背景色为蓝色
-        paddingVertical: 14,      // 垂直内边距14
-        borderRadius: 8,          // 圆角8
-        alignItems: 'center',     // 子元素垂直居中对齐
-        // width: '80%',             // 宽度占屏幕的80%
+        position: 'absolute', // 绝对定位
+        bottom: 30, // 距离底部20
+        left: 20, // 距离左侧20
+        right: 20, // 距离右侧20
+        backgroundColor: '#007AFF', // 蓝色背景
+        paddingVertical: 14, // 垂直内边距
+        borderRadius: 8, // 圆角
+        alignItems: 'center', // 文字居中
     },
     saveButtonText: {
-        color: '#fff',            // 文字颜色为白色
-        fontSize: 16,             // 字体大小16
-        fontWeight: 'bold',       // 字体加粗
+        color: '#fff', // 白色文字
+        fontSize: 16, // 字体大小
+        fontWeight: 'bold', // 加粗
     },
 });
