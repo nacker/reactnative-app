@@ -3,124 +3,143 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'rea
 import { Ionicons } from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native";
 
-export default function DiscoverScreen ({ navigation, route }: {navigation: any, route: any}) {
-
+export default function DiscoverScreen({ navigation, route }: { navigation: any, route: any }) {
     // 动态设置标题
     useEffect(() => {
         navigation.setOptions({
             title: route.params?.title || '发现',
-            // headerTitleAlign: Platform.OS === 'web' ? 'left' : 'center',
-            headerTitleAlign: 'center', // 标题居中（iOS默认居中，Android默认居左）
+            headerTitleAlign: 'center',
         });
     }, [navigation, route.params]);
 
-
-
-    // 发现页功能列表数据
-    const discoverItems = [
+    // 发现页功能列表数据（分组）
+    const discoverGroups = [
         {
-            id: 'moments',
-            name: '朋友圈',
-            icon: require('../../../assets/discover/video.png'), // 替换为你的本地图片路径
-            showArrow: true,
-            onPress: () => console.log('朋友圈')
+            title: '社交',
+            items: [
+                {
+                    id: 'moments',
+                    name: '朋友圈',
+                    icon: require('../../../assets/discover/video.png'),
+                    showArrow: true,
+                    onPress: () => console.log('朋友圈'),
+                },
+                {
+                    id: 'channels',
+                    name: '视频号',
+                    icon: require('../../../assets/discover/video.png'),
+                    showArrow: true,
+                    badge: 'New',
+                    onPress: () => console.log('视频号'),
+                },
+            ],
         },
         {
-            id: 'channels',
-            name: '视频号',
-            icon: require('../../../assets/discover/video.png'),
-            showArrow: true,
-            badge: 'New',
-            onPress: () => console.log('视频号')
+            title: '工具',
+            items: [
+                {
+                    id: 'scan',
+                    name: '扫一扫',
+                    icon: require('../../../assets/discover/qr-code.png'),
+                    showArrow: true,
+                    onPress: () => console.log('扫一扫'),
+                },
+                {
+                    id: 'shake',
+                    name: '摇一摇',
+                    icon: require('../../../assets/discover/shake-phone.png'),
+                    showArrow: true,
+                    onPress: () => console.log('摇一摇'),
+                },
+                {
+                    id: 'nearby',
+                    name: '附近的人',
+                    icon: require('../../../assets/discover/near-me.png'),
+                    showArrow: true,
+                    onPress: () => console.log('附近的人'),
+                },
+            ],
         },
         {
-            id: 'scan',
-            name: '扫一扫',
-            icon: require('../../../assets/discover/qr-code.png'),
-            showArrow: true,
-            onPress: () => console.log('扫一扫')
+            title: '娱乐',
+            items: [
+                {
+                    id: 'shopping',
+                    name: '购物',
+                    icon: require('../../../assets/discover/video.png'),
+                    showArrow: true,
+                    onPress: () => console.log('购物'),
+                },
+                {
+                    id: 'games',
+                    name: '游戏',
+                    icon: require('../../../assets/discover/shopping-bag.png'),
+                    showArrow: true,
+                    badge: '热',
+                    onPress: () => console.log('游戏'),
+                },
+                {
+                    id: 'miniPrograms',
+                    name: '小程序',
+                    icon: require('../../../assets/discover/shopping-bag.png'),
+                    showArrow: true,
+                    onPress: () => console.log('小程序'),
+                },
+            ],
         },
-        {
-            id: 'shake',
-            name: '摇一摇',
-            icon: require('../../../assets/discover/shake-phone.png'),
-            showArrow: true,
-            onPress: () => console.log('摇一摇')
-        },
-        {
-            id: 'nearby',
-            name: '附近的人',
-            icon: require('../../../assets/discover/near-me.png'),
-            showArrow: true,
-            onPress: () => console.log('附近的人')
-        },
-        {
-            id: 'shopping',
-            name: '购物',
-            icon: require('../../../assets/discover/video.png'),
-            showArrow: true,
-            onPress: () => console.log('购物')
-        },
-        {
-            id: 'games',
-            name: '游戏',
-            icon: require('../../../assets/discover/shopping-bag.png'),
-            showArrow: true,
-            badge: '热',
-            onPress: () => console.log('游戏')
-        },
-        {
-            id: 'miniPrograms',
-            name: '小程序',
-            icon: require('../../../assets/discover/shopping-bag.png'),
-            showArrow: true,
-            onPress: () => console.log('小程序')
-        }
     ];
-
-
+    const shouldShowGroupHeader = false; // 根据业务逻辑动态设置
 
     return (
         <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
-                {discoverItems.map((item, index) => (
-                    <React.Fragment key={item.id}>
-                        <TouchableOpacity
-                            style={styles.itemContainer}
-                            onPress={item.onPress}
-                            activeOpacity={0.7}
-                        >
-                            <View style={styles.itemContent}>
-                                <Image
-                                    source={typeof item.icon === 'string'
-                                        ? { uri: item.icon }  // 网络图片
-                                        : item.icon           // 本地图片（已经require）
-                                    }
-                                    style={styles.itemIcon}
-                                    // resizeMode="contain" // 推荐添加resizeMode以确保图片正确显示
-                                    // onError={(e) => console.log('图片加载失败', e.nativeEvent.error)}
-                                />
-                                <Text style={styles.itemText}>{item.name}</Text>
-                                {item.badge && (
-                                    <View style={styles.badge}>
-                                        <Text style={styles.badgeText}>{item.badge}</Text>
-                                    </View>
-                                )}
-                                {item.showArrow && (
-                                    <Image
-                                        source={{ uri: 'https://img.icons8.com/ios/50/chevron-right.png' }}
-                                        style={styles.arrowIcon}
-                                    />
-                                )}
+                {discoverGroups.map((group, groupIndex) => (
+                    <React.Fragment key={group.title}>
+                        {/* 渲染组标题 */}
+
+                        {shouldShowGroupHeader && (
+                            <View style={styles.groupHeader}>
+                                <Text style={styles.groupHeaderText}>{group.title}</Text>
                             </View>
-                        </TouchableOpacity>
-                        {index < discoverItems.length - 1 && <View style={styles.divider} />}
+                        )}
+
+                        {/* 渲染组内子项 */}
+                        {group.items.map((item, index) => (
+                            <React.Fragment key={item.id}>
+                                <TouchableOpacity
+                                    style={styles.itemContainer}
+                                    onPress={item.onPress}
+                                    activeOpacity={0.7}
+                                >
+                                    <View style={styles.itemContent}>
+                                        <Image
+                                            source={typeof item.icon === 'string' ? { uri: item.icon } : item.icon}
+                                            style={styles.itemIcon}
+                                        />
+                                        <Text style={styles.itemText}>{item.name}</Text>
+                                        {item.badge && (
+                                            <View style={styles.badge}>
+                                                <Text style={styles.badgeText}>{item.badge}</Text>
+                                            </View>
+                                        )}
+                                        {item.showArrow && (
+                                            <Image
+                                                source={{ uri: 'https://img.icons8.com/ios/50/chevron-right.png' }}
+                                                style={styles.arrowIcon}
+                                            />
+                                        )}
+                                    </View>
+                                </TouchableOpacity>
+                                {index < group.items.length - 1 && <View style={styles.divider} />}
+                            </React.Fragment>
+                        ))}
+                        {groupIndex < discoverGroups.length - 1 && <View style={styles.groupDivider} />}
                     </React.Fragment>
                 ))}
             </ScrollView>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -129,6 +148,20 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         marginTop: 10,
+    },
+    groupHeader: {
+        backgroundColor: '#F7F7F7',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+    },
+    groupHeaderText: {
+        fontSize: 14,
+        color: '#666666',
+        fontWeight: '500',
+    },
+    groupDivider: {
+        height: 10,
+        backgroundColor: '#EDEDED',
     },
     itemContainer: {
         backgroundColor: '#FFFFFF',
