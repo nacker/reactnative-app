@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AboutUsScreen from "./aboutMe/aboutMe";
 import ProfileScreen from "./ProfileScreen";
 import { SettingsScreen } from "./Settings/SettingsScreen";
+import FeedbackScreen from "./Feedback/FeedbackScreen";
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,8 @@ export default function ProfileStack() {
         />
         <Stack.Screen name="Settings" component={SettingsScreen} options={{headerShown:true}}/>
         <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{headerShown:true}}/>
+        <Stack.Screen name="Feedback" component={FeedbackScreen} options={{headerShown:true}}/>
+
     </Stack.Navigator>
   );
 }

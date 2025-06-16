@@ -41,7 +41,9 @@ export function SettingsScreen({ navigation, route }: {navigation: any, route: a
             </View>
 
             <View style={styles.group}>
-                <SettingItem icon="help-circle" label="帮助与反馈" onPress={() => {}} />
+                <SettingItem icon="help-circle" label="意见反馈" onPress={() => {
+                    navigation.navigate('Feedback')
+                }} />
                 <SettingItem
                     icon="information-circle"
                     label="关于我们"
