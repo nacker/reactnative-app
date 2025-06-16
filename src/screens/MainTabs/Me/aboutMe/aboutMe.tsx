@@ -191,12 +191,12 @@ const styles = StyleSheet.create({
     footer: {
         // 绝对定位到底部
         position: 'absolute',
-        bottom: 0,
+        bottom: 30,
         left: 0,
         right: 0,
         paddingVertical: 10,
         alignItems: 'center',
-        backgroundColor: '#987654',
+        // backgroundColor: '#987654',
     },
     copyright: {
         fontSize: 12,

@@ -2,8 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import AboutUsScreen from "./aboutMe/aboutMe";
 import ProfileScreen from "./ProfileScreen";
-import {SettingsScreen} from "./Settings/SettingsScreen";
-
+import { SettingsScreen } from "./Settings/SettingsScreen";
 
 const Stack = createStackNavigator();
 
