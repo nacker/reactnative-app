@@ -40,29 +40,29 @@ export default function AboutUsScreen({ navigation, route }: {navigation: any, r
                 </View>
 
                 {/* 团队信息 */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>我们的团队</Text>
-                    <View style={styles.teamMember}>
-                        <Image
-                            source={require('../../../../assets/app-logo.png')}
-                            style={styles.memberImage}
-                        />
-                        <View style={styles.memberInfo}>
-                            <Text style={styles.memberName}>张三</Text>
-                            <Text style={styles.memberRole}>创始人 & CEO</Text>
-                        </View>
-                    </View>
-                    <View style={styles.teamMember}>
-                        <Image
-                            source={require('../../../../assets/app-logo.png')}
-                            style={styles.memberImage}
-                        />
-                        <View style={styles.memberInfo}>
-                            <Text style={styles.memberName}>李四</Text>
-                            <Text style={styles.memberRole}>首席技术官</Text>
-                        </View>
-                    </View>
-                </View>
+                {/*<View style={styles.section}>*/}
+                {/*    <Text style={styles.sectionTitle}>我们的团队</Text>*/}
+                {/*    <View style={styles.teamMember}>*/}
+                {/*        <Image*/}
+                {/*            source={require('../../../../assets/app-logo.png')}*/}
+                {/*            style={styles.memberImage}*/}
+                {/*        />*/}
+                {/*        <View style={styles.memberInfo}>*/}
+                {/*            <Text style={styles.memberName}>张三</Text>*/}
+                {/*            <Text style={styles.memberRole}>创始人 & CEO</Text>*/}
+                {/*        </View>*/}
+                {/*    </View>*/}
+                {/*    <View style={styles.teamMember}>*/}
+                {/*        <Image*/}
+                {/*            source={require('../../../../assets/app-logo.png')}*/}
+                {/*            style={styles.memberImage}*/}
+                {/*        />*/}
+                {/*        <View style={styles.memberInfo}>*/}
+                {/*            <Text style={styles.memberName}>李四</Text>*/}
+                {/*            <Text style={styles.memberRole}>首席技术官</Text>*/}
+                {/*        </View>*/}
+                {/*    </View>*/}
+                {/*</View>*/}
 
                 {/* 联系方式 */}
                 <View style={styles.section}>
