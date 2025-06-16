@@ -14,7 +14,10 @@ export default function ProfileScreen() {
 
     return (
         <ScrollView style={styles.container}>
-            <TouchableOpacity style={styles.profile}>
+            <TouchableOpacity
+                style={styles.profile}
+                onPress={() => navigation.navigate('ProfileEdit')}
+            >
                 <Image
                     style={styles.avatar}
                     source={{ uri: 'https://i.pravatar.cc/100' }}
