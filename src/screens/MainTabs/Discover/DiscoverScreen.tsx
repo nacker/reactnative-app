@@ -22,21 +22,21 @@ export default function DiscoverScreen() {
         setTimeout(() => {
             const newData = Array.from({ length: 5 }, (_, i) => ({
                 id: `${page}-${i}`,
-                avatar: `https://via.placeholder.com/50?text=User${page}${i}`,
+                avatar: `https://randomuser.me/api/portraits/lego/7.jpg`,
                 nickname: `用户_${page}${i}`,
                 time: '3分钟前',
                 content: `这是一条微博内容，来自用户_${page}${i}。`,
                 images: [
-                    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg',
-                    'https://images.unsplash.com/photo-1496566303115-51a7a8b5c544?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-                    'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg',
-                    'https://images.hippopx.com/photos/smile/woman-portrait-female-happy-closeup-715939.jp',
-                    'https://en.freejpg.com.ar/asset/900/1e/1e9a/F100010174.jpg',
-                    'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
-                    'https://images.pexels.com/photos/373912/pexels-photo-373912.jpeg',
-                    'https://cdn.pixabay.com/photo/2017/07/28/14/29/macarons-2548827_1280.jpg',
-                    'https://images.hippopx.com/photos/smile/woman-portrait-female-happy-closeup-715939.jpg',
-                ].slice(0, Math.floor(Math.random() * 10)), // 随机生成0-9张图片
+                    'https://resume.yihaoredian.com.cn/0.jpg',
+                    'https://resume.yihaoredian.com.cn/1.jpg',
+                    'https://resume.yihaoredian.com.cn/2.jpg',
+                    'https://resume.yihaoredian.com.cn/3.jpg',
+                    'https://resume.yihaoredian.com.cn/4.jpg',
+                    'https://resume.yihaoredian.com.cn/5.jpg',
+                    'https://resume.yihaoredian.com.cn/6.jpg',
+                    'https://resume.yihaoredian.com.cn/7.jpg',
+                    'https://resume.yihaoredian.com.cn/8.jpg',
+                ].slice(0, Math.floor(Math.random() * 10)) // 随机生成0-9张图片
             }));
             setWeiboList(prev => [...prev, ...newData]);
             setLoading(false);
@@ -86,26 +86,33 @@ export default function DiscoverScreen() {
                         <Text style={styles.content}>{item.content}</Text>
 
                         {/* 图片区域 */}
-                        {item.images.map((image: string, index: number) => {
-                            // 根据图片数量动态调整样式
-                            const imageStyle =
-                                item.images.length === 1
-                                    ? styles.singleImage
-                                    : item.images.length === 2
-                                        ? styles.doubleImage
-                                        : item.images.length <= 4
-                                            ? styles.gridImageSmall
-                                            : styles.gridImage;
+                        {item.images.length > 0 && (
+                            <View style={styles.imageContainer}>
+                                {item.images.map((image: string, index: number) => {
+                                    // 根据图片数量动态调整样式
+                                    const imageStyle =
+                                        item.images.length === 1
+                                            ? styles.singleImage
+                                            : item.images.length === 2
+                                                ? styles.doubleImage
+                                                : item.images.length === 3
+                                                    ? styles.tripleImage
+                                                    : item.images.length === 4
+                                                        ? styles.gridImageSmall
+                                                        : item.images.length <= 6
+                                                            ? styles.gridImageMedium
+                                                            : styles.gridImage;
 
-                            return (
-                                <Image
-                                    key={index}
-                                    source={{ uri: image }}
-                                    style={imageStyle}
-                                />
-                            );
-                        })}
-
+                                    return (
+                                        <Image
+                                            key={index}
+                                            source={{ uri: image }}
+                                            style={imageStyle}
+                                        />
+                                    );
+                                })}
+                            </View>
+                        )}
 
                         {/* 底部操作栏 */}
                         <View style={styles.actionBar}>
@@ -162,6 +169,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 20,
         marginRight: 10,
+        backgroundColor: '#ccc',
     },
     userInfoText: {
         flex: 1,
@@ -198,8 +206,20 @@ const styles = StyleSheet.create({
         margin: '0.5%',
         borderRadius: 8,
     },
+    tripleImage: {
+        width: '32%', // 三张图片显示为一行三列
+        aspectRatio: 1,
+        margin: '0.5%',
+        borderRadius: 8,
+    },
     gridImageSmall: {
         width: '49%', // 四张及以下图片显示为两列布局
+        aspectRatio: 1,
+        margin: '0.5%',
+        borderRadius: 8,
+    },
+    gridImageMedium: {
+        width: '32%', // 五到六张图片显示为两行三列
         aspectRatio: 1,
         margin: '0.5%',
         borderRadius: 8,
