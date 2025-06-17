@@ -16,9 +16,16 @@ eas build -p android --profile development
 eas submit -p android --profile production
 ```
 
-```bazaar
+```bash
 npm install react-native-vector-icons
 npm install react-native-linear-gradient
 # 如果需要图片选择功能
 npm install react-native-image-picker
+```
+
+```bash
+npm install -g eas-cli
+eas login
+eas build:configure
+eas build --platform android --profile production
 ```

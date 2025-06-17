@@ -18,7 +18,9 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.twinswolves.wechat",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "buildType": "apk",
