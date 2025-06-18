@@ -89,6 +89,9 @@ npm run android
 
 # 运行 Web 版本
 npm run web
+
+# 打包web
+npx expo export --platform web
 ```
 
 ## 开发
